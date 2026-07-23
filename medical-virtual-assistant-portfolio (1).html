@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oluwatosin Omotola — Medical Virtual Assistant Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --white:#ffffff;
+    --black:#111111;
+    --blue:#1B3B6F;
+    --blue-deep:#122747;
+    --gold:#B8902E;
+    --gold-soft:#D9B65C;
+    --brown:#7A4A28;
+    --muted:#5b5b5b;
+    --line:#e4e4e4;
+    --font-display:'Poppins', sans-serif;
+    --font-body:'Poppins', sans-serif;
+    --font-mono:'IBM Plex Mono', monospace;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--white);
+    color:var(--black);
+    font-family:var(--font-body);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
+  }
+  a{color:inherit;}
+  .wrap{max-width:1040px; margin:0 auto; padding:0 32px;}
+
+  /* ---------- NAV ---------- */
+  header.nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(255,255,255,0.94);
+    backdrop-filter:blur(6px);
+    border-bottom:2px solid var(--blue);
+  }
+  .nav-inner{
+    max-width:1040px; margin:0 auto; padding:18px 32px;
+    display:flex; align-items:center; justify-content:space-between;
+    position:relative;
+  }
+  .nav-mark{
+    font-family:var(--font-mono); font-size:13px; letter-spacing:0.08em;
+    color:var(--blue); font-weight:500;
+  }
+  .nav-links{display:flex; gap:26px; font-size:14px;}
+  .nav-links a{text-decoration:none; color:var(--black); transition:color .2s; padding-bottom:2px; border-bottom:2px solid transparent;}
+  .nav-links a:hover{color:var(--blue); border-bottom:2px solid var(--gold);}
+  .nav-links a:focus-visible{outline:2px solid var(--blue); outline-offset:4px;}
+  .nav-toggle{
+    display:none; background:none; border:2px solid var(--blue); border-radius:2px;
+    width:38px; height:38px; padding:0; cursor:pointer;
+    flex-direction:column; align-items:center; justify-content:center; gap:4px;
+  }
+  .nav-toggle span{width:18px; height:2px; background:var(--blue); display:block; transition:transform .2s, opacity .2s;}
+  .nav-toggle[aria-expanded="true"] span:nth-child(1){transform:translateY(6px) rotate(45deg);}
+  .nav-toggle[aria-expanded="true"] span:nth-child(2){opacity:0;}
+  .nav-toggle[aria-expanded="true"] span:nth-child(3){transform:translateY(-6px) rotate(-45deg);}
+
+  /* ---------- HERO ---------- */
+  .hero{padding:100px 0 70px; position:relative;}
+  .eyebrow{
+    font-family:var(--font-mono); font-size:12.5px; letter-spacing:0.14em;
+    color:var(--gold); text-transform:uppercase; margin-bottom:22px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{
+    content:''; width:7px; height:7px; border-radius:50%;
+    background:var(--gold); display:inline-block;
+  }
+  h1.name{
+    font-family:var(--font-display); font-weight:700;
+    font-size:clamp(38px, 5.6vw, 60px);
+    line-height:1.05; letter-spacing:-0.01em;
+    color:var(--black);
+  }
+  .role{
+    font-family:var(--font-display); font-weight:500; font-size:clamp(18px,2.4vw,24px);
+    color:var(--blue); margin-top:10px;
+  }
+  .tagline{
+    max-width:560px; margin-top:22px; color:var(--muted); font-size:16px;
+  }
+  .hero-cta{margin-top:34px; display:flex; gap:14px; flex-wrap:wrap;}
+  .btn{
+    font-family:var(--font-body); font-size:14px; font-weight:600;
+    padding:13px 24px; border-radius:2px; text-decoration:none;
+    display:inline-block; transition:all .2s; border:2px solid transparent;
+  }
+  .btn-primary{background:var(--blue); color:var(--white);}
+  .btn-primary:hover{background:var(--blue-deep);}
+  .btn-gold{background:var(--gold); color:var(--white);}
+  .btn-gold:hover{background:#9c7724;}
+  .btn-outline{border:2px solid var(--blue); color:var(--blue); background:var(--white);}
+  .btn-outline:hover{background:var(--blue); color:var(--white);}
+
+  /* EKG signature line */
+  .ekg-wrap{margin-top:56px; border-top:2px solid var(--blue); border-bottom:2px solid var(--gold); padding:18px 0; overflow:hidden;}
+  .ekg-wrap svg{display:block; width:100%; height:56px;}
+  .ekg-path{
+    fill:none; stroke:var(--gold); stroke-width:2;
+    stroke-linecap:round; stroke-linejoin:round;
+    stroke-dasharray:1400; stroke-dashoffset:1400;
+    animation:draw 2.6s ease-out forwards;
+  }
+  @keyframes draw{ to{stroke-dashoffset:0;} }
+  .ekg-caption{
+    display:flex; justify-content:space-between; margin-top:10px;
+    font-family:var(--font-mono); font-size:11px; color:var(--muted); letter-spacing:0.04em;
+  }
+
+  /* ---------- SECTION LABEL ---------- */
+  .section{padding:64px 0; border-top:1px solid var(--line);}
+  .chart-label{
+    display:flex; align-items:center; gap:16px; margin-bottom:8px;
+  }
+  .circle-num{
+    width:38px; height:38px; border-radius:50%; border:2px solid var(--brown);
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+    font-family:var(--font-mono); font-size:14px; color:var(--brown); font-weight:500;
+  }
+  .section-title{
+    font-family:var(--font-display); font-weight:600; font-size:clamp(24px,3vw,30px);
+    color:var(--black);
+  }
+  .section-sub{color:var(--muted); font-size:14.5px; margin-top:10px; margin-left:54px; max-width:640px;}
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{
+    display:grid; grid-template-columns:1.3fr 1fr; gap:48px; margin-top:36px;
+  }
+  .about-text p{color:var(--black); font-size:15.5px; margin-bottom:14px;}
+  .about-text p:last-child{margin-bottom:0;}
+  .cred-card{
+    border:1px solid var(--line); border-left:3px solid var(--blue); background:var(--white); padding:20px;
+  }
+  .cred-card + .cred-card{margin-top:14px;}
+  .cred-k{font-family:var(--font-mono); font-size:11px; color:var(--gold); letter-spacing:0.06em; margin-bottom:6px;}
+  .cred-v{font-size:14.5px; color:var(--black); font-weight:500;}
+
+  /* ---------- SERVICES ---------- */
+  .services-grid{
+    display:grid; grid-template-columns:repeat(2, 1fr); gap:18px; margin-top:36px;
+  }
+  .service-card{
+    border:1px solid var(--line); padding:24px; position:relative;
+  }
+  .service-num{
+    width:34px; height:34px; border-radius:50%; border:2px solid var(--brown);
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--font-mono); font-size:12px; color:var(--brown); margin-bottom:14px;
+  }
+  .service-title{font-family:var(--font-display); font-weight:600; font-size:16.5px; color:var(--black); margin-bottom:8px;}
+  .service-desc{font-size:14px; color:var(--muted);}
+
+  /* ---------- SKILLS ---------- */
+  .record{
+    border:1px solid var(--line); background:var(--white); margin-top:26px;
+  }
+  .record-head{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 24px; border-bottom:2px solid var(--blue); background:#f7f9fc;
+  }
+  .record-title{font-family:var(--font-display); font-weight:600; font-size:16.5px; color:var(--black);}
+  .record-id{font-family:var(--font-mono); font-size:11.5px; color:var(--muted);}
+  .record-body{padding:6px 0;}
+  .skill-row{
+    display:flex; align-items:flex-start; gap:16px;
+    padding:14px 24px; border-bottom:1px solid var(--line);
+  }
+  .skill-row:last-child{border-bottom:none;}
+  .skill-code{
+    font-family:var(--font-mono); font-size:12px; color:var(--gold);
+    min-width:70px; padding-top:2px; flex-shrink:0; font-weight:500;
+  }
+  .skill-name{font-size:15px; color:var(--black); font-weight:500;}
+
+  /* ---------- WORK SAMPLES ---------- */
+  .samples-grid{
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; margin-top:36px;
+  }
+  .sample-card{
+    border:1px solid var(--line); padding:22px; min-height:150px;
+    display:flex; flex-direction:column; justify-content:space-between;
+  }
+  .sample-tag{font-family:var(--font-mono); font-size:11px; color:var(--blue); letter-spacing:0.04em;}
+  .sample-title{font-family:var(--font-display); font-weight:600; font-size:15.5px; color:var(--black); margin-top:10px;}
+  .sample-desc{font-size:13.5px; color:var(--muted); margin-top:8px;}
+  .sample-placeholder{
+    border:1px dashed var(--line); padding:26px; text-align:center; margin-top:20px;
+    color:var(--muted); font-size:13.5px;
+  }
+  .sample-card.has-image{padding:0; overflow:hidden; min-height:auto;}
+  .sample-img{width:100%; display:block; border-bottom:2px solid var(--blue);}
+  .sample-card.has-image .sample-body{padding:18px 22px 22px;}
+
+  /* ---------- CERTIFICATIONS ---------- */
+  .cert-grid{
+    display:grid; grid-template-columns:repeat(2, 1fr); gap:16px; margin-top:28px;
+  }
+  .cert-card{
+    border:1px solid var(--line); padding:20px; display:flex; align-items:center; gap:16px;
+  }
+  .cert-badge{
+    width:46px; height:46px; border-radius:50%; border:2px solid var(--brown);
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--font-mono); font-size:12px; color:var(--brown); font-weight:600;
+    flex-shrink:0;
+  }
+  .cert-name{font-weight:600; font-size:14.5px; color:var(--black);}
+  .cert-issuer{font-size:13px; color:var(--muted); margin-top:3px;}
+  .cert-issuer a{color:var(--blue); text-decoration:underline;}
+
+  /* ---------- FOOTER / CONTACT ---------- */
+  footer{padding:70px 0 60px; text-align:center; border-top:2px solid var(--blue); margin-top:20px;}
+  footer h2{font-family:var(--font-display); font-weight:600; font-size:clamp(24px,3vw,30px); color:var(--black);}
+  footer p{color:var(--muted); margin-top:12px; font-size:14.5px;}
+  .footer-links{display:flex; gap:16px; justify-content:center; margin-top:26px; flex-wrap:wrap;}
+  .footer-note{
+    margin-top:50px; font-family:var(--font-mono); font-size:11px; color:var(--muted);
+    letter-spacing:0.04em;
+  }
+
+  @media (max-width:720px){
+    .wrap{padding:0 20px;}
+    .nav-inner{padding:14px 20px;}
+    .nav-toggle{display:flex;}
+    .nav-links{
+      display:flex; flex-direction:column; gap:0; font-size:15px;
+      position:absolute; top:100%; left:0; right:0;
+      background:var(--white); border-bottom:2px solid var(--blue);
+      max-height:0; overflow:hidden; transition:max-height .25s ease;
+    }
+    .nav-links.open{max-height:340px;}
+    .nav-links a{
+      padding:14px 20px; border-bottom:1px solid var(--line); width:100%;
+    }
+    .nav-links a:hover{border-bottom:1px solid var(--line); background:#f7f9fc;}
+
+    .hero{padding:56px 0 44px;}
+    .hero-cta{gap:12px;}
+    .hero-cta .btn{flex:1 1 auto; text-align:center;}
+    .ekg-wrap{margin-top:36px;}
+    .ekg-caption{flex-direction:column; gap:4px;}
+
+    .section{padding:44px 0;}
+    .chart-label{gap:12px;}
+    .circle-num{width:32px; height:32px; font-size:12px;}
+    .section-sub{margin-left:0; margin-top:8px;}
+
+    .about-grid{grid-template-columns:1fr; gap:28px; margin-top:26px;}
+    .services-grid{grid-template-columns:1fr; margin-top:26px;}
+    .samples-grid{grid-template-columns:1fr; margin-top:26px;}
+    .cert-grid{grid-template-columns:1fr; margin-top:20px;}
+    .cert-card{padding:16px;}
+
+    .record{margin-top:20px;}
+    .record-head{padding:14px 18px;}
+    .skill-row{flex-direction:column; gap:4px; padding:12px 18px;}
+    .skill-code{min-width:auto;}
+
+    .footer-links{flex-direction:column; align-items:stretch;}
+    .footer-links .btn{text-align:center;}
+  }
+
+  @media (max-width:420px){
+    .name{font-size:32px;}
+    .tagline{font-size:14.5px;}
+    .section-title{font-size:21px;}
+    .service-card, .cert-card{padding:16px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <span class="nav-mark">MVA // RECORD</span>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="nav-links" id="navLinks">
+      <a href="#about">About Me</a>
+      <a href="#services">My Services</a>
+      <a href="#skills">My Skills</a>
+      <a href="#work-cert">Work Samples &amp; Certification</a>
+      <a href="#contact">Contact Me</a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  (function(){
+    var toggle = document.getElementById('navToggle');
+    var links = document.getElementById('navLinks');
+    toggle.addEventListener('click', function(){
+      var isOpen = links.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+    links.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){
+        links.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+  })();
+</script>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Available for remote engagements</div>
+    <h1 class="name">Oluwatosin Omotola</h1>
+    <div class="role">Medical Virtual Assistant</div>
+    <p class="tagline">Supporting clinicians and healthcare practices with accurate medical coding, meticulous documentation, and HIPAA-compliant administrative operations — so patient care stays the only priority in the room.</p>
+    <div class="hero-cta">
+      <a href="#services" class="btn btn-primary">My Services</a>
+      <a href="#contact" class="btn btn-outline">Get In Touch</a>
+    </div>
+
+    <div class="ekg-wrap" aria-hidden="true">
+      <svg viewBox="0 0 1000 60" preserveAspectRatio="none">
+        <path class="ekg-path" d="M0,30 L120,30 L150,30 L165,10 L180,50 L195,30 L230,30 L260,30 L280,18 L300,42 L320,30 L420,30 L450,30 L465,10 L480,50 L495,30 L530,30 L560,30 L580,18 L600,42 L620,30 L720,30 L750,30 L765,10 L780,50 L795,30 L830,30 L860,30 L880,18 L900,42 L920,30 L1000,30"/>
+      </svg>
+    </div>
+    <div class="ekg-caption">
+      <span>PATIENT RECORDS · CODING · SCHEDULING · COMPLIANCE</span>
+      <span>STATUS: ACTIVE</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 1. ABOUT ME ===================== -->
+<section class="section" id="about">
+  <div class="wrap">
+    <div class="chart-label">
+      <span class="circle-num">01</span>
+      <h2 class="section-title">About Me</h2>
+    </div>
+    <p class="section-sub">Background and credentials behind the work.</p>
+
+    <div class="about-grid">
+      <div class="about-text">
+        <p>I bring a background in Medical Physiology combined with hands-on administrative healthcare experience to my work as a Medical Virtual Assistant. That clinical grounding shapes how I read a chart, verify a code, or flag a documentation gap — I understand not just the task, but the reason it matters to patient care.</p>
+        <p>My focus is on the operational backbone of a healthcare practice: coding accuracy, clean documentation, dependable scheduling, and communication that never loses sight of HIPAA. I completed a Medical Virtual Assistant internship through VAA Global, where I put these skills into practice in real workflows.</p>
+      </div>
+      <div class="about-cards">
+        <div class="cred-card">
+          <div class="cred-k">EDUCATION</div>
+          <div class="cred-v">B.Tech, Medical Physiology — Ladoke Akintola University of Technology</div>
+        </div>
+        <div class="cred-card">
+          <div class="cred-k">TRAINING</div>
+          <div class="cred-v">Medical Virtual Assistant Internship — VAA Global</div>
+        </div>
+        <div class="cred-card">
+          <div class="cred-k">CERTIFICATIONS</div>
+          <div class="cred-v">HIPAA (VAA Global &amp; hipaatraining.us) · Virtual Assistant (ALX Academy)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 2. MY SERVICES ===================== -->
+<section class="section" id="services">
+  <div class="wrap">
+    <div class="chart-label">
+      <span class="circle-num">02</span>
+      <h2 class="section-title">My Services</h2>
+    </div>
+    <p class="section-sub">How I support clinicians, practices, and healthcare teams.</p>
+
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-num">A</div>
+        <div class="service-title">Medical Coding Support</div>
+        <div class="service-desc">CPT and HCPCS Level II code lookup, interpretation, and accuracy checks aligned with AMA and CMS code sets.</div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">B</div>
+        <div class="service-title">Documentation &amp; Records Review</div>
+        <div class="service-desc">Reviewing medical documentation and records for completeness, accuracy, and compliance before they move downstream.</div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">C</div>
+        <div class="service-title">EHR &amp; SOAP Note Support</div>
+        <div class="service-desc">Entering and maintaining clean, structured documentation directly within electronic health record systems.</div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">D</div>
+        <div class="service-title">Patient Intake &amp; Scheduling</div>
+        <div class="service-desc">Managing intake forms and appointment calendars so patients are seen on time and records are ready in advance.</div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">E</div>
+        <div class="service-title">Insurance &amp; HMO Verification</div>
+        <div class="service-desc">Confirming coverage and benefits ahead of appointments to reduce billing delays and claim denials.</div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">F</div>
+        <div class="service-title">HIPAA-Compliant Communication</div>
+        <div class="service-desc">Handling patient and provider correspondence with strict attention to privacy and regulatory compliance.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 3. MY SKILLS ===================== -->
+<section class="section" id="skills">
+  <div class="wrap">
+    <div class="chart-label">
+      <span class="circle-num">03</span>
+      <h2 class="section-title">My Skills</h2>
+    </div>
+    <p class="section-sub">The full skill set behind the services above, organized as it would appear on a patient chart.</p>
+
+    <div class="record">
+      <div class="record-head">
+        <span class="record-title">Coding &amp; Documentation</span>
+        <span class="record-id">SEC-03A / 09 ITEMS</span>
+      </div>
+      <div class="record-body">
+        <div class="skill-row"><span class="skill-code">CPT</span><span class="skill-name">Medical Coding — AMA and CMS Code Sets</span></div>
+        <div class="skill-row"><span class="skill-code">CPT-LU</span><span class="skill-name">CPT Code Lookup and Interpretation</span></div>
+        <div class="skill-row"><span class="skill-code">HCPCS-II</span><span class="skill-name">HCPCS Level II Code Familiarity</span></div>
+        <div class="skill-row"><span class="skill-code">DOC-RV</span><span class="skill-name">Medical Documentation Review</span></div>
+        <div class="skill-row"><span class="skill-code">REC-AN</span><span class="skill-name">Medical Records Analysis</span></div>
+        <div class="skill-row"><span class="skill-code">CDS</span><span class="skill-name">Clinical Documentation Support</span></div>
+        <div class="skill-row"><span class="skill-code">QA</span><span class="skill-name">Healthcare Data Accuracy and Quality Assurance</span></div>
+        <div class="skill-row"><span class="skill-code">COMP</span><span class="skill-name">Healthcare Compliance Awareness</span></div>
+        <div class="skill-row"><span class="skill-code">DTL</span><span class="skill-name">Attention to Detail</span></div>
+      </div>
+    </div>
+
+    <div class="record">
+      <div class="record-head">
+        <span class="record-title">Clinical &amp; EHR Support</span>
+        <span class="record-id">SEC-03B / 03 ITEMS</span>
+      </div>
+      <div class="record-body">
+        <div class="skill-row"><span class="skill-code">EHR</span><span class="skill-name">Electronic Health Records (EHR) Documentation &amp; Support</span></div>
+        <div class="skill-row"><span class="skill-code">SOAP</span><span class="skill-name">SOAP Note Documentation</span></div>
+        <div class="skill-row"><span class="skill-code">DOC-SK</span><span class="skill-name">Medical Documentation Skills</span></div>
+      </div>
+    </div>
+
+    <div class="record">
+      <div class="record-head">
+        <span class="record-title">Administrative &amp; Patient-Facing</span>
+        <span class="record-id">SEC-03C / 05 ITEMS</span>
+      </div>
+      <div class="record-body">
+        <div class="skill-row"><span class="skill-code">INTK</span><span class="skill-name">Patient Intake Management</span></div>
+        <div class="skill-row"><span class="skill-code">SCHED</span><span class="skill-name">Medical Appointment Scheduling</span></div>
+        <div class="skill-row"><span class="skill-code">HIPAA</span><span class="skill-name">HIPAA-Compliant Communication</span></div>
+        <div class="skill-row"><span class="skill-code">INS-VF</span><span class="skill-name">HMO / Insurance Verification</span></div>
+        <div class="skill-row"><span class="skill-code">ADM</span><span class="skill-name">Healthcare Administrative Support</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 4. WORK SAMPLES & CERTIFICATION ===================== -->
+<section class="section" id="work-cert">
+  <div class="wrap">
+    <div class="chart-label">
+      <span class="circle-num">04</span>
+      <h2 class="section-title">Work Samples &amp; Certification</h2>
+    </div>
+    <p class="section-sub">Evidence of training completed, plus a place to showcase sample work as it becomes available.</p>
+
+    <div class="samples-grid">
+      <div class="sample-card has-image">
+        <img class="sample-img" src="assets/cpt-code-lookup-sample.png" alt="CPT code lookup table listing office visit and inpatient evaluation and management codes">
+        <div class="sample-body">
+          <span class="sample-tag">SAMPLE</span>
+          <div class="sample-title">CPT Code Lookup</div>
+          <div class="sample-desc">Reference lookup of Evaluation and Management CPT codes, covering new patient visits, established patient visits, and inpatient/observation care by complexity and time.</div>
+        </div>
+      </div>
+      <div class="sample-card has-image">
+        <img class="sample-img" src="assets/soap-note-sample.png" alt="SOAP note sample showing subjective, objective, assessment, and plan sections">
+        <div class="sample-body">
+          <span class="sample-tag">SAMPLE</span>
+          <div class="sample-title">SOAP Note Documentation</div>
+          <div class="sample-desc">Structured clinical note covering subjective complaint, objective vitals and exam findings, and assessment — formatted for clarity and clinical accuracy.</div>
+        </div>
+      </div>
+      <div class="sample-card has-image">
+        <img class="sample-img" src="assets/patient-intake-sample.png" alt="Patient intake form privacy declaration section, built for Anumera Health Clinic">
+        <div class="sample-body">
+          <span class="sample-tag">SAMPLE</span>
+          <div class="sample-title">Patient Intake Form — Anumera Health Clinic</div>
+          <div class="sample-desc">Multi-section digital intake form, including a clear privacy declaration outlining how patient data is collected, secured, and used.</div>
+        </div>
+      </div>
+    </div>
+    <div class="cert-grid">
+      <div class="cert-card">
+        <div class="cert-badge">H</div>
+        <div>
+          <div class="cert-name">HIPAA Certification</div>
+          <div class="cert-issuer">VAA Global</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-badge">H</div>
+        <div>
+          <div class="cert-name">HIPAA Certification</div>
+          <div class="cert-issuer"><a href="https://hipaatraining.us" target="_blank" rel="noopener">hipaatraining.us</a></div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-badge">I</div>
+        <div>
+          <div class="cert-name">MVA Internship Completed</div>
+          <div class="cert-issuer">VAA Global</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-badge">VA</div>
+        <div>
+          <div class="cert-name">Virtual Assistant Certification</div>
+          <div class="cert-issuer">ALX Academy</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 5. CONTACT ME ===================== -->
+<footer id="contact">
+  <div class="wrap">
+    <h2>Let's work together</h2>
+    <p>Available for remote medical virtual assistant roles — coding support, documentation, scheduling, and administrative operations.</p>
+    <div class="footer-links">
+      <a href="mailto:omotolatwinkles@gmail.com" class="btn btn-primary">Email Me</a>
+      <a href="https://www.linkedin.com/in/oluwatosin-omotola/" target="_blank" rel="noopener" class="btn btn-gold">LinkedIn</a>
+    </div>
+    <div class="footer-note">RECORD CLOSED · THANK YOU FOR REVIEWING</div>
+  </div>
+</footer>
+
+</body>
+</html>
